@@ -76,7 +76,7 @@ BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
 
 
 # Assert
-TARGET_OTA_ASSERT_DEVICE := RMX2151
+TARGET_OTA_ASSERT_DEVICE := RMX2151,RMX2151L1,RMX2153,RMX2153L1,RMX2155,RMX2155L1,RMX2161,RMX2161L1,RMX2163,RMX2163L1
 
 # AVB
 BOARD_AVB_ENABLE := true
@@ -102,6 +102,8 @@ TARGET_COPY_OUT_VENDOR := vendor
 # Recovery
 BOARD_HAS_LARGE_FILESYSTEM := true
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/etc/recovery.fstab
+BOARD_HAS_NO_SELECT_BUTTON := true
 
 # Crypto
 PLATFORM_SECURITY_PATCH := 2099-12-31
@@ -139,3 +141,27 @@ TW_INCLUDE_LOGICAL := oppo_product oppo_engineering common_preload
 # PBRP specific build flags
 PB_TORCH_PATH := "/sys/class/flashlight_core/flashlight"
 PB_DISABLE_DEFAULT_TREBLE_COMP := true
+
+#fixing FBE
+export OF_SKIP_FBE_DECRYPTION=1
+
+# Default (if not set): N/A
+SHRP_DEVICE_CODE := RMX2151
+
+# Path of your SHRP device tree
+# Replace <device-brand> with the device brand name
+# (SHRP_DEVICE_CODE will expand to the above variable so check if that is correct)
+SHRP_PATH := device/realme/RMX2151
+
+# Maintainer name
+# Default (if not set): N/A
+SHRP_MAINTAINER := SAURAJ
+
+# Recovery Type (for "About" section only)
+# Default (if not set): N/A
+SHRP_REC_TYPE := Normal
+
+
+# Your device's recovery path, dont use blindly
+# No default
+SHRP_REC := /dev/block/bootdevice/by-name/recovery
