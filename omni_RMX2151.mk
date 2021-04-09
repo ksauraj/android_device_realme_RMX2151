@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2020 Android Open Source Project
+# Copyright (C) 2019 Potato Open Sauce Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,18 +21,26 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
 
-# Inherit from our custom product configuration
-$(call inherit-product, vendor/pb/config/common.mk)
+# Inherit from our PitchBlack configuration
+$(call inherit-product, vendor/omni/config/common.mk)
 
-PRODUCT_COPY_FILES += $(call find-copy-subdir-files,*,$(LOCAL_PATH)/recovery/root,recovery/root) \
-    $(LOCAL_PATH)/prebuilt/dtb:dtb.img
+PRODUCT_COPY_FILES += $(call find-copy-subdir-files,*,$(LOCAL_PATH)/recovery/root,recovery/root)
+
+# Fastbootd
+PRODUCT_PACKAGES += \
+    android.hardware.fastboot@1.0-impl-mock \
+    android.hardware.fastboot@1.0-impl-mock.recovery
 
 ## Device identifier. This must come after all inclusions
-PRODUCT_DEVICE := rmx2151
-PRODUCT_NAME := omni_rmx2151
-PRODUCT_BRAND := Realme
-PRODUCT_MODEL := rmx2151
-PRODUCT_MANUFACTURER := Realme
+PRODUCT_DEVICE := RMX2151
+PRODUCT_NAME := omni_RMX2151
+PRODUCT_BRAND := realme
+PRODUCT_MODEL := realme 7
+PRODUCT_MANUFACTURER := realme
+
+# HACK: Set vendor patch level
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.vendor.build.security_patch=2099-12-31
 
 # HACK: Set vendor patch level and enable Treble
 PRODUCT_PROPERTY_OVERRIDES += \
